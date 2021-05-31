@@ -372,3 +372,4 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 src/components/signup.js
+src/config.js
