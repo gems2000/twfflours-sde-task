@@ -1,32 +1,27 @@
-import React, {useState} from 'react';
-
+import React, {useContext} from "react";
 import {Redirect} from "react-router-dom";
+import {AuthContext} from "./auth.js";
 import fcon from "../config.js";
 
-const Signup = () => {
-
-    const [currentUser, setCurrentUser] = useState(null);
+const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const {email, password} = e.target.elements;
-
         try{
-            fcon.auth().createUserWithEmailAndPassword(email.value,password.value);
-            setCurrentUser(true);
-        }
-        catch(error){
+            fcon.auth().signInWithEmailAndPassword(email.value, password.value);
+
+        } catch(error)
+        {
             alert(error);
         }
     };
-
-    if (currentUser)
-    {
+    const {currentUser} = useContext(AuthContext);
+    if(currentUser){
         return <Redirect to="/dashboard"/>;
     }
-
     return (
         <>
-        <h1>Sign UP</h1>
+        <h1>Login</h1>
         <form onSubmit={handleSubmit}>
             <label for="email">Email</label>
             <input type="email" name="email" placeholder="Email"/>
@@ -36,6 +31,7 @@ const Signup = () => {
             </form>
             </>
     );
+
 };
 
-export default Signup ;
+export default Login;
